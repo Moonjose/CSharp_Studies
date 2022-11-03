@@ -5,26 +5,37 @@ using System.Globalization;
 namespace PrimeiroProjeto {
     internal class Program {
         static void Main(string[] args) {
-            Console.WriteLine("Quantos quartos vão ser alugados?");
-            int n = int.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            Estudante[] arrayEstudantes = new Estudante[10];
-
-            for(int i = 0; i < n; i++) {
-                Console.WriteLine("Digite o nome:");
+            Console.WriteLine("Quantos funcionários serão registrados?");
+            int n = int.Parse(Console.ReadLine());
+            List<Employee> list = new List<Employee>();
+ 
+            for(int i = 1; i <= n; i++) {
+                Console.WriteLine($"Employee #{i}:");
+                Console.WriteLine("Id:");
+                int id = int.Parse(Console.ReadLine()); 
+                Console.WriteLine("Name:");
                 string name = Console.ReadLine();
-                Console.WriteLine("Digite o email:");
-                string email = Console.ReadLine();
-                Console.WriteLine("Digite o quarto:");
-                int room = int.Parse(Console.ReadLine());
-
-                arrayEstudantes[room] = new Estudante(name, email);
+                Console.WriteLine("Salary:");
+                double salary = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                list.Add(new Employee(id, name, salary));
             }
-            Console.WriteLine("------------------- Quartos ocupados -------------------");
-            for(int i = 0; i < arrayEstudantes.Length; i++) {
-                if (arrayEstudantes[i] != null) {
-                    Console.WriteLine($"{i}: {arrayEstudantes[i]}");
-                    Console.WriteLine("----------------------------------");
-                }
+
+            Console.WriteLine("Enter the employee id that will have salary increase:");
+            int empId = int.Parse(Console.ReadLine());
+           
+            Employee empFound = list.Find(x => x.Id == empId);
+            if(empFound != null) {
+                Console.WriteLine("Enter the percentage:");
+                double percentage = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                empFound.increaseSalary(percentage);
+            } else {
+                Console.WriteLine("This id does not exist!");
+            }
+            
+            Console.WriteLine("Updated list of employees:");
+
+            foreach(Employee emp in list) {
+                Console.WriteLine(emp);
             }
         }
     }
